@@ -1,0 +1,17 @@
+{
+	"name": "ETime",
+	"version": "1.0.0",
+	"author": [
+		"[[User:Brad|Brad]]"
+	],
+	"url": "https://atitd.wiki",
+	"descriptionmsg": "Adds <etime> tag",
+	"type": "parserhook",
+	"AutoloadClasses": {
+		"ETime": "ETime_body.php"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "ETime::onParserSetup"
+	},
+	"manifest_version": 1
+}

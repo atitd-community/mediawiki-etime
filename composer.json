@@ -1,0 +1,11 @@
+{
+	"name": "atitd-community/mediawiki-etime",
+	"description": "Adds an etime tag that retrieves and displays the current Egpyt time.",
+	"version": "1.0.0",
+	"homepage": "https://github.com/atitd-community/mediawiki-etime",
+	"time": "2019-01-24",
+	"license": "proprietary",
+	"require": {
+		"guzzlehttp/guzzle": "^6.3"
+	}
+}
