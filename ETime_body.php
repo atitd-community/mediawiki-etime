@@ -27,7 +27,7 @@ class ETime
 	 *
 	 * @return string
 	 */
-	protected static function renderETime( $input, $params, $parser, $frame ) {
+	public static function renderETime( $input, $params, $parser, $frame ) {
 
 		$parser->disableCache();
 
