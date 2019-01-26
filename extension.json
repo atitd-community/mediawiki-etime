@@ -4,7 +4,7 @@
 	"author": [
 		"[[User:Brad|Brad]]"
 	],
-	"url": "https://atitd.wiki",
+	"url": "https://github.com/atitd-community/mediawiki-etime",
 	"descriptionmsg": "Adds <etime> tag",
 	"type": "parserhook",
 	"AutoloadClasses": {
