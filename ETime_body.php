@@ -33,7 +33,7 @@ class ETime
 
 		$client = new Client();
 
-		$response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
+		$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
 
 		$raw = $response->getBody()->getContents();
 
