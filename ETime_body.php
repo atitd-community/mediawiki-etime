@@ -41,11 +41,7 @@ class ETime
 
 		$split = explode("\t", $raw);
 
-		try {
-			$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
-		} catch (Exception $e) {
-			$output = 'Error';
-		}
+		$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
 
 		return $output;
 	}
