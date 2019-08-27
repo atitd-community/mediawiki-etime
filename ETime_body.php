@@ -31,17 +31,25 @@ class ETime
 
 		$parser->disableCache();
 
-		$client = new Client();
+		try {
+			$client = new Client();
 
-		// The ArmEagle API is the preferred source but we can switch to Cegaiel's API as a backup if needed
-		// $response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
-		$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
+			// The ArmEagle API is the preferred source but we can switch to Cegaiel's API as a backup if needed
+			// $response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
+			$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
 
-		$raw = $response->getBody()->getContents();
+			$raw = $response->getBody()->getContents();
 
-		$split = explode("\t", $raw);
+			if(strpos($raw, 'ATITD8A') !== false) {
+				$split = explode("\t", $raw);
 
-		$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
+				$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
+			} else {
+				$output = 'Error';
+			}
+		} catch (Exception $e) {
+			$output = 'Error';
+		}
 
 		return $output;
 	}
