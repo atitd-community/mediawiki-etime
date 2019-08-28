@@ -6,7 +6,7 @@
 	],
 	"url": "https://github.com/atitd-community/mediawiki-etime",
 	"descriptionmsg": "Adds <etime> tag",
-	"type": "parserhook",
+	"type": "atitd",
 	"AutoloadClasses": {
 		"ETime": "ETime_body.php"
 	},
