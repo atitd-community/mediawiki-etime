@@ -40,7 +40,7 @@ class ETime
 
 			$raw = $response->getBody()->getContents();
 
-			if(strpos($raw, 'ATITD8A') !== false) {
+			if(strpos($raw, 'ATITD9A') !== false) {
 				$split = explode("\t", $raw);
 
 				$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
