@@ -29,7 +29,7 @@ class ETime
 	 */
 	public static function renderETime( $input, $params, $parser, $frame ) {
 
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry(0);
 
 		try {
 			$client = new Client();
