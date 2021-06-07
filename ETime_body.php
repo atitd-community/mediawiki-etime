@@ -35,12 +35,12 @@ class ETime
 			$client = new Client();
 
 			// The ArmEagle API is the preferred source but we can switch to Cegaiel's API as a backup if needed
-			// $response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
-			$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
+			$response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
+			//$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
 
 			$raw = $response->getBody()->getContents();
 
-			if(strpos($raw, 'ATITD9A') !== false) {
+			if(strpos($raw, 'ATITD10A') !== false) {
 				$split = explode("\t", $raw);
 
 				$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
