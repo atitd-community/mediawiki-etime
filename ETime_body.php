@@ -1,11 +1,12 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
-
-use GuzzleHttp\Client;
+use MediaWiki\MediaWikiServices;
 
 class ETime
 {
+	/** Seconds a reading is reused, about one game minute. */
+	private const CACHE_TTL = 15;
+
 	/**
 	 * The MediaWiki hook we'll start from. Sets the text
 	 * for the {{#tag}} and calls the render function.
@@ -17,8 +18,8 @@ class ETime
 	}
 
 	/**
-	 * All we need to do here is get the current Egypt time from the ArmEagle
-	 * API and return it as a string that is cleaned up a bit for display.
+	 * All we need to do here is get the current Egypt time from the game's
+	 * time API and return it as a string that is cleaned up a bit for display.
 	 *
 	 * @param $input
 	 * @param $params
@@ -28,29 +29,30 @@ class ETime
 	 * @return string
 	 */
 	public static function renderETime( $input, $params, $parser, $frame ) {
+		global $wgETimeGameId;
 
-		$parser->getOutput()->updateCacheExpiry(0);
+		$parser->getOutput()->updateCacheExpiry( self::CACHE_TTL );
 
-		try {
-			$client = new Client();
+		$services = MediaWikiServices::getInstance();
+		$cache = $services->getMainWANObjectCache();
 
-			// The ArmEagle API is the preferred source but we can switch to Cegaiel's API as a backup if needed
-			$response = $client->request('GET', 'https://armeagle.atitd.org/tabtime.php');
-			//$response = $client->request('GET', 'https://atitd.sharpnetwork.net/gameclock/tabtime.asp');
+		// A failed fetch is cached as '' so a slow API isn't asked again on every view
+		$output = $cache->getWithSetCallback(
+			$cache->makeGlobalKey( 'etime', $wgETimeGameId ),
+			self::CACHE_TTL,
+			static function () use ( $services, $wgETimeGameId ) {
+				$raw = $services->getHttpRequestFactory()->get(
+					'https://gamedata.desert-nomad.com/api/time/' . rawurlencode( $wgETimeGameId ),
+					[ 'timeout' => 3, 'connectTimeout' => 2 ],
+					__METHOD__
+				);
 
-			$raw = $response->getBody()->getContents();
+				$text = json_decode( $raw ?? '', true )['text'] ?? null;
 
-			if(strpos($raw, 'ATITD10A') !== false) {
-				$split = explode("\t", $raw);
-
-				$output = 'Year ' . $split[0] . ', ' . $split[1] . ' ' . $split[2] . '-' . $split[3] . ', ' . $split[4] . ':' . $split[5] . ' ' . $split[6];
-			} else {
-				$output = 'Error';
+				return is_string( $text ) ? $text : '';
 			}
-		} catch (Exception $e) {
-			$output = 'Error';
-		}
+		);
 
-		return $output;
+		return htmlspecialchars( $output === '' ? 'Error' : $output );
 	}
 }

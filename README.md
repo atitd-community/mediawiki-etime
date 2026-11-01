@@ -10,5 +10,9 @@ Installation
 wfLoadExtension( 'ETime' );
 ```
 
-  * Run `composer install` from within the `ETime` directory.
   * **Done** — Navigate to Special:Version on your wiki to verify that the extension is successfully installed.
+
+Configuration
+=============
+
+  * `$wgETimeGameId` (default `ATITD11A`): the game world whose time is shown, as https://gamedata.desert-nomad.com/api/time/ names it.

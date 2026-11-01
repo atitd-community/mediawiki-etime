@@ -1,17 +1,26 @@
 {
 	"name": "ETime",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"author": [
 		"[[User:Brad|Brad]]"
 	],
 	"url": "https://github.com/atitd-community/mediawiki-etime",
 	"descriptionmsg": "Adds <etime> tag",
 	"type": "atitd",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
 	"AutoloadClasses": {
 		"ETime": "ETime_body.php"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": "ETime::onParserSetup"
 	},
-	"manifest_version": 1
+	"config": {
+		"ETimeGameId": {
+			"value": "ATITD11A",
+			"description": "The game world whose time is shown, as the game's time API names it."
+		}
+	},
+	"manifest_version": 2
 }
